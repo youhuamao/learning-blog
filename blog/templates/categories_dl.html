@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{#{% block title %}文章列表{% endblock %}#}
+{##}
+{% block content %}
+{#<!--<h1>文章列表</h1>-->#}
+{##}
+{##}
+{##}
+{#{% for post in posts %}#}
+
+<div class="layui-form">
+  <table class="layui-table">
+    <colgroup>
+      <col width="250">
+      <col width="250">
+      <col width="700">
+      <col>
+    </colgroup>
+    <thead>
+      <tr>
+        <th>文章ID</th>
+        <th>文章名称</th>
+        <th>文章摘要</th>
+        <th>内容</th>
+
+      </tr>
+    </thead>
+    {% for post in posts %}
+    <tbody>
+      <tr>
+        <td><a href="{{ url_for('blog.show', id=post['id']) }}"> {{ post['id'] }} </a></td>
+        <td><p style="font-size:20px"><time datetime="{{ post['created_at'] }}"> {{ post['title'] }} </time></p></td>
+        <td><p style="font-size:20px"> {{ post['content'][:40] }} ...</p></td>
+        <td><p style="font-size:20px"> {{ post['classifly'] }}</p></td>
+      </tr>
+    </tbody>
+    {% else %}
+    <p>暂无文章</p>
+    {% endfor %}
+{#    {% endblock %}#}
+  </table>
+</div>
+
+<script src="../static/layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述 JS 路径需要改成你本地的 -->
+<script>
+
+</script>
+
+
+{#{% else %}#}
+{#    <p>暂无文章</p>#}
+{#{% endfor %}#}
+{% endblock %}
+

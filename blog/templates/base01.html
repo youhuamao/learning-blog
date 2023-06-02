@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>博客管理系统（实验）</title>
+  <link rel="stylesheet" href="../static/css/layui.css">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <style>
+    body{margin: 10px;}
+    .demo-carousel{height: 200px; line-height: 200px; text-align: center;}
+  </style>
+</head>
+
+{#<body background="../static/image/sun.jpg">#}
+
+<script src="../static/layui.js"  ></script>
+<script src="../static/layedit.js"  ></script>
+<script src="../static/layer/layer.js" ></script>
+<script src="../static/jquery.min.js"></script>
+<div class="layui-layout layui-layout-admin">
+  <div class="layui-header">
+    <div class="layui-logo layui-hide-xs layui-bg-black">博客demo</div>
+    <!-- 头部区域（可配合layui 已有的水平导航） -->
+    <ul class="layui-nav layui-layout-left">
+      <li class="layui-nav-item layui-hide-xs"><a href="{{ url_for('blog.index') }}">首页</a></li>
+          <li class="layui-nav-item">
+            <a href="javascript:;">常规</a>
+          </li>
+          <li class="layui-nav-item"><a href="">导航</a></li>
+          <li class="layui-nav-item">
+            <a href="javascript:;">子级</a>
+            <dl class="layui-nav-child">
+              <dd><a href="">菜单1</a></dd>
+              <dd><a href="">菜单2</a></dd>
+              <dd><a href="">菜单3</a></dd>
+            </dl>
+          </li>
+          <li class="layui-nav-item">
+            <a href="javascript:;">选项</a>
+            <dl class="layui-nav-child">
+              <dd><a href="">选项1</a></dd>
+              <dd class="layui-this"><a href="">选项2</a></dd>
+              <dd><a href="">选项3</a></dd>
+            </dl>
+          </li>
+    </ul>
+
+
+    <!--    登陆信息-->
+    <ul class="layui-nav layui-layout-right">
+      <li class="layui-nav-item layui-hide layui-show-md-inline-block">
+        <a href="javascript:;">
+          <img src="../static/image/logo.jpg" class="layui-nav-img">
+        </a>
+        <dl class="layui-nav-child">
+          <dd><a href="">用户信息</a></dd>
+          <dd><a href="/logout/">注销</a></dd>
+        </dl>
+      </li>
+
+      <li class="layui-nav-item" lay-header-event="menuRight" lay-unselect>
+        <a href="javascript:;">
+          <i class="layui-icon layui-icon-more-vertical"></i>
+        </a>
+      </li>
+
+    </ul>
+
+  </div>
+
+  <div class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+      <ul class="layui-nav layui-nav-tree" lay-filter="test">
+        <li class="layui-nav-item layui-nav-itemed">
+          <a class="" href="javascript:;">文章管理</a>
+          <dl class="layui-nav-child">
+            <dd><a href="{{ url_for('blog.biaoge') }}">文章列表</a></dd>
+            <dd><a href="{{ url_for('blog.create') }}">添加文章</a></dd>
+          </dl>
+        </li>
+
+        <li class="layui-nav-item">
+          <a href="javascript:;">文章分析</a>
+          <dl class="layui-nav-child">
+{#            <dd><a href="{{ url_for('blog.word_frequency') }}">词频分析</a></dd>#}
+{#            <dd><a href="{{ url_for('blog.categories') }}">文章分类</a></dd>#}
+            <dd><a href="{{ url_for('blog.word_frequency') }}">词频分析</a></dd>
+            <dd><a href="{{ url_for('blog.categories') }}">文章分类</a></dd>
+            <dd><a href="{{ url_for('blog.categories1') }}">文章分类(伯努利)</a></dd>
+            <dd><a href="{{ url_for('blog.categories2') }}">文章分类(决策树)</a></dd>
+            <dd><a href="{{ url_for('blog.categories_dl') }}">深度学习</a></dd>
+          </dl>
+        </li>
+
+        <li class="layui-nav-item">
+            <a href="javascript:;">用户管理</a>
+            <dl class="layui-nav-child">
+                <dd><a href="{{ url_for('blog.login') }}">登录</a></dd>
+                <dd><a href="{{ url_for('blog.register') }}">注册</a></dd>
+                <dd><a href="/logout/" id="zhuxiao">注销</a></dd>
+            </dl>
+        </li>
+        <li class="layui-nav-item"><a href="{{ url_for('blog.about') }}">about</a></li>
+
+      </ul>
+    </div>
+  </div>
+
+  <div class="layui-body">
+    <!-- 内容主体区域 -->
+
+<!--    <nav>-->
+<!--        <ul>-->
+<!--            <li><a href="{{ url_for('blog.index') }}">首页</a></li>-->
+<!--            <li><a href="{{ url_for('blog.create') }}">添加文章</a></li>-->
+<!--        </ul>-->
+<!--    </nav>-->
+
+    <div style="padding: 15px;">
+
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+    {% endwith %}
+    {% block content %}{% endblock %}
+
+    </div>
+
+  </div>
+
+</div>
+<script src="../static/layui.js"></script>
+<script src="../static/layer/layer.js" ></script>
+<script src="../static/jquery.min.js"></script>
+<script>
+//JS
+layui.use(['element', 'layer', 'util' ,'rate' ,'layedit' ,'form'], function(){
+  var element = layui.element
+  ,layer = layui.layer
+  ,util = layui.util
+  ,rate = layui.rate
+  ,$ = layui.$;
+
+  //头部事件
+  util.event('lay-header-event', {
+    //左侧菜单事件
+    menuLeft: function(othis){
+      layer.msg('展开左侧菜单的操作', {icon: 0});
+    }
+    ,menuRight: function(){
+      layer.open({
+        type: 1
+        ,content: '<div style="padding: 15px;">处理右侧面板的操作</div>'
+        ,area: ['260px', '100%']
+        ,offset: 'rt' //右上角
+        ,anim: 5
+        ,shadeClose: true
+      });
+    }
+  });
+
+  var layedit = layui.layedit
+                ,$ = layui.jquery;
+  var layedit_2 = layui.layedit
+                ,$ = layui.jquery;
+
+    //自定义工具栏
+  layedit.build('LAY_demo1'
+      ,{tool: [
+        'strong' //加粗
+        ,'italic' //斜体
+        ,'underline' //下划线
+        ,'del' //删除线
+        ,'|' //分割线
+        ,'left' //左对齐
+        ,'center' //居中对齐
+        ,'face' //表情
+        ,'help' //帮助
+      ]
+      ,height: 280 //设置编辑器高度
+      }
+  );
+  layedit_2.build('LAY_demo2'
+      ,{
+      height: 280 //设置编辑器高度
+<!--      ,hideTool: False-->
+      }
+  );
+
+
+});
+</script>
+</body>
+
+<style type="text/css">
+    body{
+	    background: url("../static/image/sun.jpg") no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+	}
+</style>
+
+</html>

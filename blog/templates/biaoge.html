@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{#{% block title %}文章列表{% endblock %}#}
+{##}
+{% block content %}
+{#<!--<h1>文章列表</h1>-->#}
+{##}
+{##}
+{##}
+{#{% for post in posts %}#}
+
+<div class="layui-form">
+  <table class="layui-table">
+    <colgroup>
+      <col width="150">
+      <col width="150">
+      <col width="200">
+      <col>
+    </colgroup>
+        <form action="{{ url_for('blog.find') }}" method="post">
+            <div>
+                <label for="title">标题：</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+
+            <button type="submit">查询</button>
+        </form>
+    <thead>
+      <tr>
+        <th>标题</th>
+        <th>创建时间</th>
+        <th>内容</th>
+        <th>添加</th>
+        <th>删除</th>
+
+      </tr>
+    </thead>
+    {% for post in posts %}
+
+    <tbody>
+
+
+
+      <tr>
+        <td><a href="{{ url_for('blog.show', id=post['id']) }}"> {{ post['title'] }} </a></td>
+        <td><p style="font-size:2px"><time datetime="{{ post['created_at'] }}"> {{ post['created_at'] }} </time></p></td>
+        <td><p style="font-size:20px"> {{ post['content'][:7] }} ...</p></td>
+        <td width="10%">
+{#          <form action="{{ url_for('blog.edit', id=post['id']) }}" method="POST" class="container">#}
+{#            <input type="hidden" value="{{ post.id }}" name="id">#}
+{#            <input type="submit" class="layui-btn layui-btn-primary" value="删除文章">#}
+{#              #}
+{#          </form>#}
+        <button type="submit" class="layui-btn layui-btn-primary">
+        <a href="{{ url_for('blog.edit', id=post['id']) }}">编辑文章</a>
+        </button>
+        </td>
+        <td width="10%">
+          <form action="{{ url_for('blog.delete', id=post['id']) }}" method="POST" class="container">
+            <input type="hidden" value="{{ post.id }}" name="id">
+            <input type="submit" class="layui-btn layui-btn-primary" value="删除文章">
+          </form>
+        </td>
+      </tr>
+    </tbody>
+    {% else %}
+    <p>暂无文章</p>
+    {% endfor %}
+{#    {% endblock %}#}
+  </table>
+</div>
+
+<script src="../static/layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述 JS 路径需要改成你本地的 -->
+<script>
+
+</script>
+
+
+{#{% else %}#}
+{#    <p>暂无文章</p>#}
+{#{% endfor %}#}
+{% endblock %}
+

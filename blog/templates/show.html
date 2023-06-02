@@ -1,0 +1,135 @@
+{#<!-- show.html -->#}
+{#{% extends 'base.html' %}#}
+{##}
+{#{% block title %}{{ post['title'] }}{% endblock %}#}
+{##}
+{#{% block content %}#}
+{#<article>#}
+{#    <header>#}
+{#        <h1>{{ post['title'] }}</h1>#}
+{#        <time datetime="{{ post['created_at'] }}">发表于：{{ post['created_at'] }}</time>#}
+{#    </header>#}
+{#    <p>{{ post['content'] }}</p>#}
+{#    <footer>#}
+{#        <button type="submit">#}
+{#            <a href="{{ url_for('blog.edit', id=post['id']) }}">编辑文章</a>#}
+{#        </button>#}
+{#        <form action="{{ url_for('blog.delete', id=post['id']) }}" method="post">#}
+{#            <input type="hidden" name="_method" value="delete">#}
+{#            <button type="submit">删除文章</button>#}
+{#        </form>#}
+{#    </footer>#}
+{#</article>#}
+{#{% endblock %}#}
+{##}
+<!-- show.html -->
+{% extends 'base.html' %}
+
+{% block title %}{{ post['title'] }}{% endblock %}
+
+{% block content %}
+<article>
+    <div class="layui-bg-gray" style="padding: 40px;">
+        <div class="layui-row layui-col-space15">
+{#          <div class="layui-col-md6">#}
+            <div class="layui-panel">
+              <div style="padding: 50px 30px;">
+                <header>
+                        <div class="layui-card-header">
+                            <h3><a href="{{ url_for('blog.show', id=post['id']) }}"> {{ post['title'] }} </a></h3>
+                        </div>
+                </header>
+                          <div class="layui-card-body">
+                              <p style="font-size:2px"><time datetime="{{ post['created_at'] }}">发表于：{{ post['created_at'] }}</time></p>
+{#                              <p style="font-size:20px"> {{ post['content'][:30] }} ...</p>#}
+                          </div>
+                          <div class="layui-card-body">
+                              <p style="font-size:20px"> {{ post['content']}} ...</p>
+                          </div>
+                          <footer>
+                            <button type="submit">
+                                <a href="{{ url_for('blog.edit', id=post['id']) }}">编辑文章</a>
+                            </button>
+
+
+
+
+                            <form action="{{ url_for('blog.delete', id=post['id']) }}" method="post">
+                                <input type="hidden" name="_method" value="delete">
+                                <button type="submit">删除文章</button>
+                            </form>
+                          </footer>
+                    <div id="test1"></div>
+                    <script src="../src/layui.js"></script>
+              </div>
+            </div>
+{#          </div>#}
+        </div>
+    </div>
+</article>
+  <script>
+  layui.use('rate', function(){
+    var rate = layui.rate;
+
+    //渲染
+    var ins1 = rate.render({
+    elem: '#test1'
+    ,value: 3 //初始值
+    ,text: true
+    ,setText: function(value){ //自定义文本的回调
+      var arrs = {
+        '1': '极差'
+        ,'2': '差'
+        ,'3': '中等'
+        ,'4': '好'
+        ,'5': '极好'
+      };
+      this.span.text(arrs[value] || ( value + "星"));
+    }
+    ,choose: function(value){
+    if(value > 4) alert( '么么哒' )
+    }
+
+    });
+  });
+
+  </script>
+{#<article>#}
+{#    <header>#}
+{#        <h1>{{ post['title'] }}</h1>#}
+{#        <time datetime="{{ post['created_at'] }}">发表于：{{ post['created_at'] }}</time>#}
+{#    </header>#}
+{#    <p>{{ post['content'] }}</p>#}
+{#    <footer>#}
+{#        <button type="submit">#}
+{#            <a href="{{ url_for('blog.edit', id=post['id']) }}">编辑文章</a>#}
+{#        </button>#}
+{#        <form action="{{ url_for('blog.delete', id=post['id']) }}" method="post">#}
+{#            <input type="hidden" name="_method" value="delete">#}
+{#            <button type="submit">删除文章</button>#}
+{#        </form>#}
+{#    </footer>#}
+{#</article>#}
+
+{#<article>#}
+{#    <header>#}
+{#        <h1>{{ post['title'] }}</h1>#}
+{#        <time datetime="{{ post['created_at'] }}">发表于：{{ post['created_at'] }}</time>#}
+{#    </header>#}
+{#    <p>{{ post['content'] }}</p>#}
+{#    <footer>#}
+{#        <button type="submit">#}
+{#            <a href="{{ url_for('blog.edit', id=post['id']) }}">编辑文章</a>#}
+{#        </button>#}
+{#        <form action="{{ url_for('blog.delete', id=post['id']) }}" method="post">#}
+{#            <input type="hidden" name="_method" value="delete">#}
+{#            <button type="submit">删除文章</button>#}
+{#        </form>#}
+{#    </footer>#}
+{#</article>#}
+<script src="../static/layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述 JS 路径需要改成你本地的 -->
+</body>
+</html>
+{% endblock %}
+

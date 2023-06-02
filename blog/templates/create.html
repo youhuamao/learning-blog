@@ -1,0 +1,30 @@
+<!-- create.html -->
+{% extends 'base.html' %}
+
+{% block title %}添加文章{% endblock %}
+
+{% block content %}
+<h1>添加文章</h1>
+<form action="{{ url_for('blog.create') }}" method="post">
+
+    <div>
+        <label for="title">标题：</label>
+        <input type="text" id="title" name="title" required>
+    </div>
+{#    <div>#}
+{#        <label for="content">内容：</label>#}
+{#        <textarea rows="10" cols="50" id="content" name="content" required></textarea>#}
+{#    </div>#}
+        <div>
+        <label for="LAY_demo1">内容：</label>
+<!--        <textarea id="LAY_demo2" class="layui-textarea">-->
+        <textarea rows="100" cols="50" class="layui-textarea" id="LAY_demo1" name="content" required>
+        </textarea>
+    </div>
+    <button type="submit">添加文章</button>
+
+
+</form>
+
+{% endblock %}
+

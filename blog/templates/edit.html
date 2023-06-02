@@ -1,0 +1,24 @@
+<!-- edit.html -->
+{% extends 'base.html' %}
+
+{% block title %}编辑文章{% endblock %}
+
+{% block content %}
+
+<h3>编辑文章</h3>
+<form action="{{ url_for('blog.edit', id=post['id']) }}" method="post">
+    <div>
+        <label for="title">标题：</label>
+        <input type="text" id="title" name="title" value="{{ post['title'] }}" required>
+    </div>
+    <div>
+        <label for="content">内容：</label>
+        <textarea rows="10" cols="50" id="content" name="content" required>{{ post['content'] }}</textarea>
+    </div>
+    <button type="submit">更新文章</button>
+</form>
+
+
+
+{% endblock %}
+
